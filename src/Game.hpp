@@ -24,11 +24,15 @@ private:
     void render() const;
 
     bool isRunning;
+    bool paused;
 
     float deltaTime;
 
     SDL_Window* window;
     SDL_Renderer* renderer;
+
+    SDL_Texture* greetingScreen;
+    SDL_Rect gsDimensions;
 
     Player player;
 };

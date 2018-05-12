@@ -1,2 +1,6 @@
-/build/
+/build/CMakeFiles
+/build/*.cmake 
+/build/*.txt
+/build/JumpingCube
+/build/Makefile
 /.vscode/

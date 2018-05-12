@@ -10,9 +10,11 @@ namespace JumpingCube
 {
 Game::Game(){
     isRunning = false;
+    paused = true;
     deltaTime = 0.0f;
 }
 Game::~Game(){
+    SDL_DestroyTexture(greetingScreen);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -53,6 +55,21 @@ int Game::init(){
         return 1;
     }
 
+    SDL_Surface* surface = SDL_LoadBMP("resources/gs.bmp");
+    if(surface == nullptr){
+        fprintf(stderr, "Can't load file! Error: %s \n", SDL_GetError());
+        return 1;
+    }
+    greetingScreen = SDL_CreateTextureFromSurface(renderer, surface);
+    if(greetingScreen == nullptr){
+        fprintf(stderr, "Can't create texture! Error: %s \n", SDL_GetError());
+        return 1;
+    }
+    SDL_FreeSurface(surface);
+    SDL_QueryTexture(greetingScreen, nullptr, nullptr, &gsDimensions.w, &gsDimensions.h);
+    gsDimensions.x = 0;
+    gsDimensions.y = 0;
+
     return 0;
 }
 
@@ -64,6 +81,7 @@ void Game::handleUserInput() {
             isRunning = false;
         }
         if(event.type == SDL_KEYDOWN){
+            if(paused) paused = false;
             if(event.key.keysym.sym == SDLK_SPACE){
                 if(!isSpacePressed){
                     player.jump();
@@ -80,12 +98,13 @@ void Game::handleUserInput() {
 }
 
 void Game::update(){
-    player.update(deltaTime);
+    if(!paused) player.update(deltaTime);
 }
 
 void Game::render() const{
     SDL_RenderClear(renderer);
     player.draw(renderer);
+    if(paused) SDL_RenderCopy(renderer, greetingScreen, nullptr, &gsDimensions);
     SDL_RenderPresent(renderer);
 }
 
