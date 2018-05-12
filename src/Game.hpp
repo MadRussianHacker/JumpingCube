@@ -6,7 +6,7 @@ Copyright 2018 by Michał Gibas
 #ifndef JUMPING_CUBE_GAME_HPP
 #define JUMPING_CUBE_GAME_HPP
 
-#include "SDL.h"
+#include "Player.hpp"
 
 namespace JumpingCube
 {
@@ -25,8 +25,12 @@ private:
 
     bool isRunning;
 
+    float deltaTime;
+
     SDL_Window* window;
     SDL_Renderer* renderer;
+
+    Player player;
 };
 
 } //namespace JumpingCube
