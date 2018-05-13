@@ -25,6 +25,7 @@ private:
 
     bool isRunning;
     bool paused;
+    bool gameOver;
 
     float deltaTime;
 
@@ -32,7 +33,8 @@ private:
     SDL_Renderer* renderer;
 
     SDL_Texture* greetingScreen;
-    SDL_Rect gsDimensions;
+    SDL_Texture* gameOverScreen;
+    SDL_Rect gsDimensions, goDimensions;
 
     Player player;
 };

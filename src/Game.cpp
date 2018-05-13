@@ -11,6 +11,7 @@ namespace JumpingCube
 Game::Game(){
     isRunning = false;
     paused = true;
+    gameOver = false;
     deltaTime = 0.0f;
 }
 Game::~Game(){
@@ -54,7 +55,7 @@ int Game::init(){
         fprintf(stderr, "Can't create renderer! Error: %s \n", SDL_GetError());
         return 1;
     }
-
+    // TEXTURES //
     SDL_Surface* surface = SDL_LoadBMP("resources/gs.bmp");
     if(surface == nullptr){
         fprintf(stderr, "Can't load file! Error: %s \n", SDL_GetError());
@@ -70,6 +71,21 @@ int Game::init(){
     gsDimensions.x = 0;
     gsDimensions.y = 0;
 
+    surface = SDL_LoadBMP("resources/go.bmp");
+    if(surface == nullptr){
+        fprintf(stderr, "Can't load file! Error: %s \n", SDL_GetError());
+        return 1;
+    }
+    gameOverScreen = SDL_CreateTextureFromSurface(renderer, surface);
+    if(gameOverScreen == nullptr){
+        fprintf(stderr, "Can't create texture! Error: %s \n", SDL_GetError());
+        return 1;
+    }
+    SDL_FreeSurface(surface);
+    SDL_QueryTexture(gameOverScreen, nullptr, nullptr, &goDimensions.w, &goDimensions.h);
+    goDimensions.x = 0;
+    goDimensions.y = 0;
+    ////
     return 0;
 }
 
@@ -99,12 +115,14 @@ void Game::handleUserInput() {
 
 void Game::update(){
     if(!paused) player.update(deltaTime);
+    if(player.isDead()) gameOver = true;
 }
 
 void Game::render() const{
     SDL_RenderClear(renderer);
-    player.draw(renderer);
+    if(!gameOver) player.draw(renderer);
     if(paused) SDL_RenderCopy(renderer, greetingScreen, nullptr, &gsDimensions);
+    if(gameOver) SDL_RenderCopy(renderer, gameOverScreen, nullptr, &goDimensions);
     SDL_RenderPresent(renderer);
 }
 

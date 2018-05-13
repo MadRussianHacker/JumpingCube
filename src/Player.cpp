@@ -10,10 +10,10 @@ namespace JumpingCube
 {
 
 Player::Player(){
-    cube.w = 30;
-    cube.h = 30;
-    cube.x = 370;
-    cube.y = 270;
+    cube.w = CUBE_SIZE;
+    cube.h = CUBE_SIZE;
+    cube.x = 400 - CUBE_SIZE;
+    cube.y = 300 - CUBE_SIZE;
     playerVelocity = 0.0f;
     gravity = 0.0f;
     red = 50;
@@ -43,6 +43,12 @@ void Player::update(float deltaTime) {
 void Player::jump(){
     playerVelocity = -(MAX_JUMP_VELOCITY);
     gravity = 2.0;
+}
+
+bool Player::isDead(){
+    if(cube.y < 0) return true;
+    if(cube.y > (600-CUBE_SIZE)) return true;
+    return false;
 }
 
 } //namespace JumpingCube

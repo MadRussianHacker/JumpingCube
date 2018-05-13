@@ -19,6 +19,7 @@ public:
     void draw(SDL_Renderer* renderer) const;
     void update(float deltaTime);
     void jump();
+    bool isDead();
 private:
     SDL_Rect cube;
     int red, blue;
@@ -27,6 +28,7 @@ private:
     const float MAX_GRAVITY_VELOCITY = 15;
     const float MAX_JUMP_VELOCITY = 8;
     const float ACCELERATION = 350.0;
+    const int CUBE_SIZE = 30;
 };
 
 } //namespace JumpingCube
