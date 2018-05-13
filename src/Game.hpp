@@ -7,6 +7,7 @@ Copyright 2018 by Michał Gibas
 #define JUMPING_CUBE_GAME_HPP
 
 #include "Player.hpp"
+#include "Level.hpp"
 
 namespace JumpingCube
 {
@@ -35,6 +36,8 @@ private:
     SDL_Texture* greetingScreen;
     SDL_Texture* gameOverScreen;
     SDL_Rect dimensions;
+
+    Level level;
 
     Player player;
 };

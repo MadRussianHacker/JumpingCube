@@ -73,6 +73,8 @@ void Game::handleUserInput() {
         if(event.type == SDL_QUIT){
             isRunning = false;
         }
+        if(!gameOver){
+
         if(event.type == SDL_KEYDOWN){
             if(paused) paused = false;
             if(event.key.keysym.sym == SDLK_SPACE){
@@ -87,17 +89,25 @@ void Game::handleUserInput() {
                 isSpacePressed = false;
             }
         }
+
+        }// if(!gameOver)
     }
 }
 
 void Game::update(){
-    if(!paused) player.update(deltaTime);
+    if(!paused){ 
+        player.update(deltaTime);
+        level.update(deltaTime);
+    }
     if(player.isDead()) gameOver = true;
+    if(level.isPlayerColliding(player.getCollider()))
+        gameOver = true;
 }
 
 void Game::render() const{
     SDL_RenderClear(renderer);
-    if(!gameOver) player.draw(renderer);
+    player.draw(renderer);
+    level.draw(renderer);
     if(paused) SDL_RenderCopy(renderer, greetingScreen, nullptr, &dimensions);
     if(gameOver) SDL_RenderCopy(renderer, gameOverScreen, nullptr, &dimensions);
     SDL_RenderPresent(renderer);

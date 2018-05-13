@@ -20,6 +20,7 @@ public:
     void update(float deltaTime);
     void jump();
     bool isDead();
+    inline SDL_Rect& getCollider() { return cube; }
 private:
     SDL_Rect cube;
     int red, blue;
