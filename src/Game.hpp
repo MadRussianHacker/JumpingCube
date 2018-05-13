@@ -22,7 +22,7 @@ private:
     void handleUserInput();
     void update();
     void render() const;
-
+    bool loadTexture(const char* fileName, SDL_Texture** texture);
     bool isRunning;
     bool paused;
     bool gameOver;
@@ -34,7 +34,7 @@ private:
 
     SDL_Texture* greetingScreen;
     SDL_Texture* gameOverScreen;
-    SDL_Rect gsDimensions, goDimensions;
+    SDL_Rect dimensions;
 
     Player player;
 };

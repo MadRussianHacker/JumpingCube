@@ -56,35 +56,12 @@ int Game::init(){
         return 1;
     }
     // TEXTURES //
-    SDL_Surface* surface = SDL_LoadBMP("resources/gs.bmp");
-    if(surface == nullptr){
-        fprintf(stderr, "Can't load file! Error: %s \n", SDL_GetError());
-        return 1;
-    }
-    greetingScreen = SDL_CreateTextureFromSurface(renderer, surface);
-    if(greetingScreen == nullptr){
-        fprintf(stderr, "Can't create texture! Error: %s \n", SDL_GetError());
-        return 1;
-    }
-    SDL_FreeSurface(surface);
-    SDL_QueryTexture(greetingScreen, nullptr, nullptr, &gsDimensions.w, &gsDimensions.h);
-    gsDimensions.x = 0;
-    gsDimensions.y = 0;
-
-    surface = SDL_LoadBMP("resources/go.bmp");
-    if(surface == nullptr){
-        fprintf(stderr, "Can't load file! Error: %s \n", SDL_GetError());
-        return 1;
-    }
-    gameOverScreen = SDL_CreateTextureFromSurface(renderer, surface);
-    if(gameOverScreen == nullptr){
-        fprintf(stderr, "Can't create texture! Error: %s \n", SDL_GetError());
-        return 1;
-    }
-    SDL_FreeSurface(surface);
-    SDL_QueryTexture(gameOverScreen, nullptr, nullptr, &goDimensions.w, &goDimensions.h);
-    goDimensions.x = 0;
-    goDimensions.y = 0;
+    dimensions.x = 0;
+    dimensions.y = 0;
+    dimensions.w = 800;
+    dimensions.h = 600;
+    if(!loadTexture("resources/gs.bmp", &greetingScreen)) return 1;
+    if(!loadTexture("resources/go.bmp", &gameOverScreen)) return 1;
     ////
     return 0;
 }
@@ -121,9 +98,24 @@ void Game::update(){
 void Game::render() const{
     SDL_RenderClear(renderer);
     if(!gameOver) player.draw(renderer);
-    if(paused) SDL_RenderCopy(renderer, greetingScreen, nullptr, &gsDimensions);
-    if(gameOver) SDL_RenderCopy(renderer, gameOverScreen, nullptr, &goDimensions);
+    if(paused) SDL_RenderCopy(renderer, greetingScreen, nullptr, &dimensions);
+    if(gameOver) SDL_RenderCopy(renderer, gameOverScreen, nullptr, &dimensions);
     SDL_RenderPresent(renderer);
+}
+
+bool Game::loadTexture(const char* fileName, SDL_Texture** texture){
+    SDL_Surface* surface = SDL_LoadBMP(fileName);
+    if(surface == nullptr){
+        fprintf(stderr, "Can't load file! Error: %s \n", SDL_GetError());
+        return false;
+    }
+    (*texture) = SDL_CreateTextureFromSurface(renderer, surface);
+    if((*texture) == nullptr){
+        fprintf(stderr, "Can't create texture! Error: %s \n", SDL_GetError());
+        return false;
+    }
+
+    return true;
 }
 
 } //namespace JumpingCube
