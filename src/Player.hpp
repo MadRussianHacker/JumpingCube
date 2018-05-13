@@ -21,6 +21,7 @@ public:
     void jump();
 private:
     SDL_Rect cube;
+    int red, blue;
     float playerVelocity;
     float gravity;
     const float MAX_GRAVITY_VELOCITY = 15;
