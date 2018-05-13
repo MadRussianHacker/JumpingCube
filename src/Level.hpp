@@ -25,7 +25,7 @@ private:
     unsigned int obstacleCounter;
     float currentSpeed;
     int obstacleGap;
-    const int MAX_GAP_SIZE = 500;
+    const int MAX_GAP_SIZE = 620;
 };
 
 } //namespace JumpingCube

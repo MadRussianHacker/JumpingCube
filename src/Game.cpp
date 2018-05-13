@@ -97,7 +97,7 @@ void Game::handleUserInput() {
 void Game::update(){
     if(!paused){ 
         player.update(deltaTime);
-        level.update(deltaTime);
+        if(!gameOver) level.update(deltaTime);
     }
     if(player.isDead()) gameOver = true;
     if(level.isPlayerColliding(player.getCollider()))

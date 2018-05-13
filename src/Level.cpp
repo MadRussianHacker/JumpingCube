@@ -21,8 +21,8 @@ void Level::update(float deltaTime){
 
     if(!lock){
         if(obstacleCounter%2 == 0){
-            currentSpeed += 10.0f;
-            if(obstacleGap < MAX_GAP_SIZE) obstacleGap += 10;
+            currentSpeed += 20.0f;
+            if(obstacleGap < MAX_GAP_SIZE) obstacleGap += 20;
             lock = 1;
         }
     }
