@@ -10,15 +10,15 @@ namespace JumpingCube
 {
 Level::Level(){
     obstacleCounter = 1;
-    currentSpeed = 300.0f;
+    currentSpeed = 400.0f;
     obstacles.push_back(new Pillar(0, currentSpeed));
     obstacleGap = 400;
 }
 void Level::update(float deltaTime){
     static bool lock = 0;
     static std::default_random_engine engine{};
-    static std::uniform_int_distribution<int> dist{0, 1};
-
+    static std::uniform_int_distribution<int> dist{0, 2};
+    static int last = 0;
     if(!lock){
         if(obstacleCounter%2 == 0){
             currentSpeed += 20.0f;
@@ -28,10 +28,17 @@ void Level::update(float deltaTime){
     }
     if(obstacles.back()->getX() <= obstacleGap){
         int random = dist(engine);
+        while(random == last)
+            random = dist(engine);
         if(random == 0) obstacles.push_back(new Pillar(0, currentSpeed));
         if(random == 1) obstacles.push_back(new Pillar(350, currentSpeed));
+        if(random == 2) {
+            obstacles.push_back(new Pillar(0, currentSpeed));
+            obstacles.push_back(new Pillar(380, currentSpeed));
+        }
         ++obstacleCounter;
         lock = 0;
+        last = random;
     }
     if(obstacles.front()->getX() < -100)
         obstacles.erase(obstacles.begin());

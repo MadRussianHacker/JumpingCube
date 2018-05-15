@@ -9,7 +9,7 @@ namespace JumpingCube
 {
 Pillar::Pillar(int y, float speed)
 :Obstacle(y, speed){
-    rect.w = 60;
+    rect.w = 80;
     rect.h = 250;
     color.r = 200;
     color.g = 50;

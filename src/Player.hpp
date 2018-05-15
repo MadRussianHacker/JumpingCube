@@ -28,7 +28,7 @@ private:
     float gravity;
     const float MAX_GRAVITY_VELOCITY = 15;
     const float MAX_JUMP_VELOCITY = 8;
-    const float ACCELERATION = 350.0;
+    const float ACCELERATION = 400.0;
     const int CUBE_SIZE = 30;
 };
 
