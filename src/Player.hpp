@@ -28,8 +28,8 @@ private:
     float gravity;
     const float MAX_GRAVITY_VELOCITY = 15;
     const float MAX_JUMP_VELOCITY = 8;
-    const float ACCELERATION = 400.0;
-    const int CUBE_SIZE = 30;
+    const float ACCELERATION = 480.0;
+    const int CUBE_SIZE = 20;
 };
 
 } //namespace JumpingCube

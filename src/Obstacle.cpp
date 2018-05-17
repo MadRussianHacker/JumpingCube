@@ -39,6 +39,15 @@ bool Obstacle::isColliding(SDL_Rect& other){
     && (other.x < (rect.x + rect.w)) 
     && (other.y > rect.y)
     && (other.y < (rect.y + rect.h))) return true;
+    if( ((other.x+other.w) > rect.x) 
+    && (other.x < (rect.x + rect.w)) 
+    && (other.y > rect.y)
+    && (other.y < (rect.y + rect.h))) return true;
+    if( (other.x > rect.x) 
+    && (other.x < (rect.x + rect.w)) 
+    && ((other.y+other.h) > rect.y)
+    && (other.y < (rect.y + rect.h))) return true;
+    
 
     return false;
 }

@@ -19,9 +19,10 @@ void Level::update(float deltaTime){
     static std::default_random_engine engine{};
     static std::uniform_int_distribution<int> dist{0, 2};
     static int last = 0;
+
     if(!lock){
         if(obstacleCounter%2 == 0){
-            currentSpeed += 20.0f;
+            currentSpeed += 10.0f;
             if(obstacleGap < MAX_GAP_SIZE) obstacleGap += 20;
             lock = 1;
         }
@@ -33,8 +34,12 @@ void Level::update(float deltaTime){
         if(random == 0) obstacles.push_back(new Pillar(0, currentSpeed));
         if(random == 1) obstacles.push_back(new Pillar(350, currentSpeed));
         if(random == 2) {
-            obstacles.push_back(new Pillar(0, currentSpeed));
-            obstacles.push_back(new Pillar(380, currentSpeed));
+            std::uniform_int_distribution<int> a{380, 420};
+            std::uniform_int_distribution<int> b{-100, 0};
+            int aY = a(engine);
+            int bY = b(engine);
+            obstacles.push_back(new Pillar(aY, currentSpeed));
+            obstacles.push_back(new Pillar(bY, currentSpeed));
         }
         ++obstacleCounter;
         lock = 0;
